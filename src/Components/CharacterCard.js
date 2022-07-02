@@ -2,13 +2,10 @@ import React from 'react'
 import Modal from './Modal'
 
 function CharacterCard({ img, name, species, status, location, origin }) {
-
     const [isModalOpen, setIsModalOpen] = React.useState(false);
-
     const enableModal = () => {
         setIsModalOpen(true);
     }
-
     return (
         <div className="card p-2 m-2 shadow-sm" style={{ width: "18rem" }}>
             <img src={img} className="card-img-top" alt="..." />
@@ -20,7 +17,6 @@ function CharacterCard({ img, name, species, status, location, origin }) {
                 <button type="button" className="btn btn-primary" onClick={enableModal}>
                     More info
                 </button>
-
                 {
                     isModalOpen && 
                     <Modal 
