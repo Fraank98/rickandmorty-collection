@@ -1,7 +1,7 @@
 import './App.css';
 import Navbar from './Components/Navbar';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import SearchCharacters from './Pages/SearchCharacters';
+import Home from './Pages/Home';
 import MyFavorites from './Pages/MyFavorites';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<SearchCharacters />} />
+        <Route path="/" element={<Home />} />
         <Route path="/MyFavorites" element={<MyFavorites />} />
       </Routes>
     </Router>

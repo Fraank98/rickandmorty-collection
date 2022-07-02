@@ -8,6 +8,7 @@ const useFetchData = (character) => {
   let api = `https://rickandmortyapi.com/api/character/?page=1&name=${character}`;
 
   useEffect(() => {
+    console.log("Fecthing data...");
     const fetchData = async () => {
       try {
         const { data: response } = await axios.get(api);
