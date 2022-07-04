@@ -36,7 +36,7 @@ function Home() {
                     )
                     : (
                         <div className="alert alert-danger" role="alert">
-                            {error}
+                            No characters found
                         </div>
                     )
                 )

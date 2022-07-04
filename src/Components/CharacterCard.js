@@ -1,16 +1,33 @@
 import {useState} from 'react';
 import Modal from './Modal'
-import { favorites } from '../Utils/storage';
+import { updateArray, setItem, favorites, getItem } from '../Utils/storage';
 
-function CharacterCard({ img, name, species, status, location, origin, id }) {
+function CharacterCard({ img, name, species, status, location, origin, id, deleteItem }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const enableModal = () => {
         setIsModalOpen(true);
     }
     const addFavorite = () => {
-        favorites.push(id);
-        localStorage.setItem('favorites', JSON.stringify(favorites));
+        if (getItem('favorites') === null) {
+            updateArray(id);
+            setItem('favorites', favorites);
+        }
+        else {
+            const array = JSON.parse(getItem('favorites'));
+            array.push(id);
+            setItem('favorites', array);
+        }
+    }
+    const remFavorite = () => {
+        if (getItem('favorites') === null) {
+            return
+        }
+        else {
+            const array = JSON.parse(getItem('favorites'));
+            const newArray = array.filter(item => item !== id);
+            setItem('favorites', newArray);
+        }
     }
 
     return (
@@ -31,8 +48,8 @@ function CharacterCard({ img, name, species, status, location, origin, id }) {
                     <button
                         type="button"
                         className="btn btn-primary"
-                        onClick={addFavorite}>
-                        Add to favorites
+                        onClick={deleteItem ? remFavorite : addFavorite}>
+                        {deleteItem ? "Remove from favorites" : "Add to favorites" }
                     </button>
                 </div>
 

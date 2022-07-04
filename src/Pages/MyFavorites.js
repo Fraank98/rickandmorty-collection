@@ -1,22 +1,27 @@
 import { useEffect, useMemo, useState } from 'react';
 import CharacterCard from '../Components/CharacterCard';
 import { fetchData } from '../Utils/fetchData';
+import { getItem } from '../Utils/storage';
 
 
 function MyFavorites() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [characters, setCharacters] = useState([]);
-
+  const deleteItem = true
 
   useEffect(() => {
-    const favorites = JSON.parse(localStorage.getItem('favorites'));
-    const ids = favorites.toString();
-
-    fetchData({ ids }).then(result => {
-      setCharacters(result);
+    const ids = getItem('favorites');
+    if (ids !== "[]") {
+      fetchData({ ids }).then(result => {
+        setCharacters(result);
+        setLoading(false);
+      });
+    }
+    else {
+      setError('No favorites found');
       setLoading(false);
-    });
+    }
   }, [characters]);
 
   return (
@@ -27,21 +32,24 @@ function MyFavorites() {
             key={character.id}
             id={character.id}
             name={character.name}
-            image={character.image}
+            img={character.image}
             status={character.status}
             species={character.species}
             location={character.location.name}
             origin={character.origin.name}
+            deleteItem
           />
         ))) :
           <div className='d-flex justify-content-center'>
             <h1>Loading...</h1>
           </div>
         }
+        {
+          error && <div className="alert alert-danger" role="alert">{error}</div>
+        }
       </div>
     </div>
 
-      )
+  )
 }
-
-      export default MyFavorites
+export default MyFavorites
