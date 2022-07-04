@@ -27,26 +27,26 @@ function MyFavorites() {
   return (
     <div className="container">
       <div className="d-flex justify-content-around row mt-5">
-        {!loading ? (characters.map(character => (
-          <CharacterCard
-            key={character.id}
-            id={character.id}
-            name={character.name}
-            img={character.image}
-            status={character.status}
-            species={character.species}
-            location={character.location.name}
-            origin={character.origin.name}
-            deleteItem
-          />
-        ))) :
-          <div className='d-flex justify-content-center'>
-            <h1>Loading...</h1>
-          </div>
-        }
-        {
-          error && <div className="alert alert-danger" role="alert">{error}</div>
-        }
+        {!loading ?
+          (!error ? (characters.map(character => (
+            <CharacterCard
+              key={character.id}
+              id={character.id}
+              name={character.name}
+              img={character.image}
+              status={character.status}
+              species={character.species}
+              location={character.location.name}
+              origin={character.origin.name}
+              deleteItem
+            />
+          ))) : (
+            error && <div className="alert alert-danger" role="alert">{error}</div>
+          )) : (
+            <div className='d-flex justify-content-center'>
+              <h1>Loading...</h1>
+            </div>
+          )}
       </div>
     </div>
 
