@@ -19,7 +19,7 @@ function Pagination({ page, setPage, totalPages }) {
     return (
         <nav aria-label="Page navigation">
             <ul className="pagination d-flex justify-content-center mt-5">
-                <li class="page-item">
+                <li className="page-item">
                     <button className="page-link" aria-label="Previous" onClick={firstPage}>
                         <span aria-hidden="true">&laquo;</span>
                     </button>
@@ -39,7 +39,7 @@ function Pagination({ page, setPage, totalPages }) {
                         Next
                     </button>
                 </li>
-                <li class="page-item">
+                <li className="page-item">
                     <button className="page-link" aria-label="Next" onClick={latestPage}>
                         <span aria-hidden="true">&raquo;</span>
                     </button>

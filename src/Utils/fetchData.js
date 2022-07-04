@@ -1,30 +1,50 @@
-import { useEffect, useState} from 'react';
-import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { get as axiosGet } from 'axios';
+
+export const fetchData = async (queryParameters) => {
+    try {
+        const api = `https://rickandmortyapi.com/api/character/${queryParameters.id !== undefined ? queryParameters.id : `?page=${queryParameters.page}&name=${queryParameters.character}`}`;
+        const { data: result, status } = await axiosGet(api);
+        if (status === 200) {
+            return result;
+        } else if (status === 404) {
+            return {
+                result: [],
+            };
+        } else {
+            throw new Error('Error fetching data');
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            error: error.message
+        };
+    }
+};
 
 const useFetchData = (character, page) => {
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(true);
+    const [data, setData] = useState({});
+    const [loading, setLoading] = useState(true);
 
-  let api = `https://rickandmortyapi.com/api/character/?page=${page}&name=${character}`;
+    const [error, setError] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data: response } = await axios.get(api);
-        setData(response);
-      } catch (error) {
-        console.error(error)
-      }
-      setLoading(false);
+    useEffect(() => {
+        fetchData({page, character}).then(result => {
+            if (result.error) {
+                setError(result.error);
+            } else {
+                setData(result);
+                setError('');
+            }
+            setLoading(false);
+        });
+    }, [page, character]);
+
+    return {
+        data,
+        loading,
+        error,
     };
-
-    fetchData();
-  }, [api]);
-
-  return {
-    data,
-    loading,
-  };
 };
 
 export default useFetchData;
