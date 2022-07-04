@@ -3,7 +3,7 @@ import { get as axiosGet } from 'axios';
 
 export const fetchData = async (queryParameters) => {
     try {
-        const api = `https://rickandmortyapi.com/api/character/${queryParameters.id !== undefined ? queryParameters.id : `?page=${queryParameters.page}&name=${queryParameters.character}`}`;
+        const api = `https://rickandmortyapi.com/api/character/${queryParameters.ids !== undefined ? queryParameters.ids : `?page=${queryParameters.page}&name=${queryParameters.character}`}`;
         const { data: result, status } = await axiosGet(api);
         if (status === 200) {
             return result;
