@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CharacterCard from '../Components/CharacterCard';
 import { fetchData } from '../Utils/fetchData';
 import { getItem } from '../Utils/storage';
-
 
 function MyFavorites() {
   const [error, setError] = useState('');
