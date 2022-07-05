@@ -9,7 +9,6 @@ function Home() {
     const [character, setCharacter] = useState('');
     const [page, setPage] = useState(1);
     const { data, loading, error } = useFetchData(character, page);
-    console.log(data);
     return (
         <>
             <Search setCharacter={setCharacter} />
