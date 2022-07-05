@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Modal from './Modal'
 import { updateArray, setItem, favorites, getItem } from '../Utils/storage';
 
-function CharacterCard({ img, name, species, status, location, origin, id, deleteItem }) {
+function CharacterCard({ character, deleteItem }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isFavoriteAdded, setIsFavoriteAdded] = useState(false);
     const [isFavoriteAlreadyAdded, setIsFavoriteAlreadyAdded] = useState(false);
@@ -10,27 +10,26 @@ function CharacterCard({ img, name, species, status, location, origin, id, delet
     const enableModal = () => {
         setIsModalOpen(true);
     }
+
     const addFavorite = () => {
         if (getItem('favorites') === null) {
-            updateArray(id);
+            updateArray(character.id);
             setItem('favorites', favorites);
             setIsFavoriteAdded(true);
             setTimeout(() => {
                 setIsFavoriteAdded(false);
             }, 1500);
-        }
-        else {
+        }else {
             const array = JSON.parse(getItem('favorites'));
 
-            if (array.includes(id)) {
+            if (array.includes(character.id)) {
                 setIsFavoriteAlreadyAdded(true);
                 setTimeout(() => {
                     setIsFavoriteAlreadyAdded(false);
                 }, 1500);
-            }
-            else {
+            }else {
                 setIsFavoriteAdded(true);
-                array.push(id);
+                array.push(character.id);
                 setItem('favorites', array);
                 setTimeout(() => {
                     setIsFavoriteAdded(false);
@@ -38,23 +37,31 @@ function CharacterCard({ img, name, species, status, location, origin, id, delet
             }
         }
     }
+
     const remFavorite = () => {
         if (getItem('favorites') === null) {
             return
-        }
-        else {
+        }else {
             const array = JSON.parse(getItem('favorites'));
-            const newArray = array.filter(item => item !== id);
+            const newArray = array.filter(item => item !== character.id);
             setItem('favorites', newArray);
+        }
+    }
+
+    const toggleFavorite = () => {
+        if(deleteItem){
+            remFavorite();
+        }else {
+            addFavorite();
         }
     }
 
     return (
         <div className="card p-2 m-2 shadow-sm" style={{ width: "18rem" }}>
-            <img src={img} className="card-img-top" alt="..." />
+            <img src={character.image} className="card-img-top" alt="..." />
             <div className="card-body">
-                <h4 className="card-title">{name}</h4>
-                <h6 className="card-title">{species}</h6>
+                <h4 className="card-title">{character.name}</h4>
+                <h6 className="card-title">{character.species}</h6>
                 <div className='d-flex justify-content-between'>
                     <button
                         type="button"
@@ -65,7 +72,7 @@ function CharacterCard({ img, name, species, status, location, origin, id, delet
                     <button
                         type="button"
                         className="btn btn-primary"
-                        onClick={deleteItem ? remFavorite : addFavorite}>
+                        onClick={toggleFavorite}>
                         {deleteItem ? "Remove from favorites" : "Add to favorites"}
                     </button>
                 </div>
@@ -80,10 +87,7 @@ function CharacterCard({ img, name, species, status, location, origin, id, delet
                     <Modal
                         isModalOpen={isModalOpen}
                         setIsModalOpen={setIsModalOpen}
-                        location={location}
-                        status={status}
-                        origin={origin}
-                        name={name}
+                        character={character}
                     />
                 }
             </div>
