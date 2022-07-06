@@ -85,6 +85,7 @@ function CharacterCard({ character, deleteItem }) {
                 {
                     isModalOpen &&
                     <Modal
+                        key={character.id}
                         isModalOpen={isModalOpen}
                         setIsModalOpen={setIsModalOpen}
                         character={character}
