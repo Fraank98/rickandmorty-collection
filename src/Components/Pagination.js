@@ -1,5 +1,3 @@
-import React from 'react'
-
 function Pagination({ page, setPage, totalPages }) {
     const nextPage = () => {
         if (page < totalPages) {
@@ -16,6 +14,7 @@ function Pagination({ page, setPage, totalPages }) {
     const firstPage = () => {
         setPage(1);
     }
+    
     return (
         <nav aria-label="Page navigation">
             <ul className="pagination d-flex justify-content-center mt-5">
