@@ -3,8 +3,8 @@ import { get as axiosGet } from 'axios';
 
 const fetchCharacters = async (queryParameters) => {
     try {
-        if(queryParameters.ids === "[]"){
-            return [];
+        if (queryParameters.ids === "[]") {
+            return false;
         }
 
         const api = `https://rickandmortyapi.com/api/character/${queryParameters.ids !== undefined ? queryParameters.ids : `?page=${queryParameters.page}&name=${queryParameters.character}`}`;

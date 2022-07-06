@@ -31,7 +31,7 @@ function MyFavorites() {
   return (
     <div className="container">
       <div className="d-flex justify-content-around row mt-5">
-        {characters.length > 0 ?
+        {(characters && characters.length > 0 )?
           (characters.map(character => (
             <CharacterCard
               key={character.id}
